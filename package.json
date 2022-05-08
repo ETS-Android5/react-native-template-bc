@@ -1,0 +1,8 @@
+{
+  "name": "testrntemplate",
+  "version": "0.0.1",
+  "description": "React Native Template",
+  "repository": "https://github.com/buttercloud/react-native-template-bc.git",
+  "author": "Royce Chua",
+  "license": "MIT"
+}
