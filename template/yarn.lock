@@ -8051,6 +8051,7 @@ __metadata:
     metro-react-native-babel-preset: ^0.67.0
     react: 17.0.2
     react-native: 0.68.1
+    react-native-config: ^1.4.5
     react-native-gesture-handler: ^2.4.2
     react-native-localize: ^2.2.1
     react-native-mmkv: ^2.3.3
@@ -8230,6 +8231,18 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: b2e72fcc20a11adaa4014b9dc7abee9ec2d809542dda1e639ecb9b1bc5a0f0d7ac646257cb899b5d96324775a8da951f8d432d2e47c611ebae8aa0cfd2095cf2
+  languageName: node
+  linkType: hard
+
+"react-native-config@npm:^1.4.5":
+  version: 1.4.5
+  resolution: "react-native-config@npm:1.4.5"
+  peerDependencies:
+    react-native-windows: ">=0.61"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: de064bc4de4fb69141e1509ae46861b59e7ee56638ae993227b1d3f9285e3abdb150a24502206f9a581766626f3c016a64591bbda71afc53a097f803ee9be82f
   languageName: node
   linkType: hard
 

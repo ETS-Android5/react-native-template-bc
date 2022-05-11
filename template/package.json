@@ -17,6 +17,7 @@
     "lodash.memoize": "^4.1.2",
     "react": "17.0.2",
     "react-native": "0.68.1",
+    "react-native-config": "^1.4.5",
     "react-native-gesture-handler": "^2.4.2",
     "react-native-localize": "^2.2.1",
     "react-native-mmkv": "^2.3.3",
