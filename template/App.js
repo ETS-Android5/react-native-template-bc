@@ -1,29 +1,33 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  Text,
   useColorScheme,
-  View,
 } from 'react-native';
 import View from 'react-native-ui-lib/view';
 import Text from 'react-native-ui-lib/text';
-
 import {
   Colors,
-  DebugInstructions,
   Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { storage } from './src/storage';
 import * as RNLocalize from "react-native-localize";
 import { setI18nConfig, translate } from './src/i18n';
+import AuthContext from './src/authContext';
+import auth from '@react-native-firebase/auth';
 
 const App = () => {
   const [ignored, forceUpdate] = useReducer(x => {
     return (x + 1);
-  }, 0)
+  }, 0);
+
+  // auth context stuff
+  // const [isLoading, setIsLoading] = useState(true);
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  // const [isSignedout, setIsSignedout] = useState(false);
+  // const [userToken, setUserToken] = useState(null);
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -46,7 +50,25 @@ const App = () => {
     }
   }, []);
 
+  const onAuthStateChanged = (user) => {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  if (initializing) return null;
+
   return (
+    <AuthContext.Provider value={{
+      initializing,
+      user,
+    }}>
+      <RootNavigator />
+    </AuthContext.Provider>
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
@@ -56,9 +78,9 @@ const App = () => {
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-            <Text>{translate('test.test')}</Text>
-          <LearnMoreLinks />
+          }}
+        >
+          <Text>{translate('test.test')}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
