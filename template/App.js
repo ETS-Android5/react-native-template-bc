@@ -69,21 +69,6 @@ const App = () => {
     }}>
       <RootNavigator />
     </AuthContext.Provider>
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}
-        >
-          <Text>{translate('test.test')}</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
   );
 };
 

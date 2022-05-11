@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthContext from '../../authContext';
+import Intro from '../screens/Intro';
 import Login from '../screens/Login';
 import Home from '../screens/Home';
 import Settings from '../screens/Settings';
@@ -22,7 +23,10 @@ const RootNavigator = () => {
     <Stack.Navigator>
       {
         !user && (
-          <Stack.Screen name="Login" component={Login} />
+          <>
+            <Stack.Screen name="Intro" component={Intro} />
+            <Stack.Screen name="Login" component={Login} />
+          </>
         )
         user && (
           <>
