@@ -1,27 +1,23 @@
-import React, { useReducer, useState } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
-import View from 'react-native-ui-lib/view';
-import Text from 'react-native-ui-lib/text';
-import {
-  Colors,
-  Header,
-} from 'react-native/Libraries/NewAppScreen';
-import { storage } from './src/storage';
-import * as RNLocalize from "react-native-localize";
-import { setI18nConfig, translate } from './src/i18n';
-import AuthContext from './src/authContext';
+import React, { useState, useEffect } from 'react';
+
+// load design system foundation
+import './src/foundation/colors';
+import './src/foundation/typography';
+import './src/foundation/spacings';
+import './src/foundation/assets';
+
 import auth from '@react-native-firebase/auth';
+import { NavigationContainer } from '@react-navigation/native';
+import { Incubator } from 'react-native-ui-lib';
+import View from 'react-native-ui-lib/view';
+import { storage } from './src/storage';
+import AuthContext from './src/authContext';
+import RootNavigator from './src/components/navigators/RootNavigator';
+import useLocalization from './src/hooks/useLocalization';
+
+const { Toast } = Incubator;
 
 const App = () => {
-  const [ignored, forceUpdate] = useReducer(x => {
-    return (x + 1);
-  }, 0);
-
   // auth context stuff
   // const [isLoading, setIsLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
@@ -29,26 +25,9 @@ const App = () => {
   // const [isSignedout, setIsSignedout] = useState(false);
   // const [userToken, setUserToken] = useState(null);
 
-  const isDarkMode = useColorScheme() === 'dark';
+  const [toastConfig, setToastConfig] = useState({});
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  useEffect(() => { // I18n
-    forceUpdate();
-    handleLocalizationChange = () => {
-      setI18nConfig();
-      forceUpdate();
-    };
-
-    setI18nConfig();
-    RNLocalize.addEventListener('change', handleLocalizationChange);
-
-    return () => {
-      RNLocalize.removeEventListener('change', handleLocalizationChange);
-    }
-  }, []);
+  useLocalization();
 
   const onAuthStateChanged = (user) => {
     setUser(user);
@@ -66,8 +45,15 @@ const App = () => {
     <AuthContext.Provider value={{
       initializing,
       user,
+      toastConfig, // TODO: move to another context or rename this one
+      setToastConfig,
     }}>
-      <RootNavigator />
+      <View flex useSafeArea>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </View>
+      <Toast {...toastConfig} />
     </AuthContext.Provider>
   );
 };

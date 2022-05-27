@@ -24,7 +24,6 @@ target 'ProjectName' do
     # Pods for testing
   end
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   # Enables Flipper.
   #
